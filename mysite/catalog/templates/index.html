@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Home</h1>
+  <p>Welcome to , a website developed by <em>Catherine</em>!</p>
+
+  <h2>Dynamic content</h2>
+  <p>The data set has the following record counts:</p>
+  <ul>
+    <li><strong>Pigs:</strong> {{ num_pigs }}</li>
+    <li><strong>Datas:</strong> {{ num_datas }}</li>
+  </ul>
+{% endblock %}

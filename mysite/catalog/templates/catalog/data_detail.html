@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Title: {{ data.title }}</h1>
+
+  <p><strong>Pig:</strong> <a href="">{{ data.pig_id }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>weight:</strong> {{ data.weight }}</p> 
+  <p><strong>length:</strong> {{ data.length }}</p>
+  <p><strong>height:</strong> {{ data.height }}</p> 
+  <p><strong>front_width:</strong> {{ data.front_width }}</p> 
+  <p><strong>back_width:</strong> {{ data.back_width }}</p> 
+  <p><strong>depth:</strong> {{ data.depth }}</p> 
+  <p><strong>chest:</strong> {{ data.chest }}</p> 
+  <p><strong>date:</strong> {{ data.date }}</p> 
+  
+{% endblock %}

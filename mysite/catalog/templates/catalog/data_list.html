@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Data List</h1>
+  {% if data_list %}
+  <ul>
+    {% for data in data_list %}
+      <li>
+        <!-- <a href="{{ data.get_absolute_url }}">{{ data.title }}</a> ({{data.pig_id}}) -->
+        <a href="{% url 'data-detail' data.pk %}">{{ data.title }}</a> ({{data.pig_id}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no data in the library.</p>
+  {% endif %}       
+{% endblock %}
