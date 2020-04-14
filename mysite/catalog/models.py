@@ -2,15 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-# class Post(models.Model):
-#     title = models.CharField(max_length=100)
-#     content = models.TextField(blank=True)
-#     file = models.ImageField(blank=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-    
-#     def __str__(self):
-#         return self.title
-
 class Pig(models.Model):
     """Model representing an author."""
     pig_id = models.CharField(max_length=8,primary_key=True, help_text='Input birth year(XX) + ear tag')
@@ -31,13 +22,14 @@ class Pig(models.Model):
         null=True,
     )
 
-    def get_absolute_url(self):
-        """Returns the url to access a particular author instance."""
-        return reverse('author-detail', args=[str(self.id)])
+    # def get_absolute_url(self):
+    #     """Returns the url to access a particular author instance."""
+    #     return reverse('pig-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.pig_id}'
+        # return f'{self.pig_id}'
+        return self.pig_id
     
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""

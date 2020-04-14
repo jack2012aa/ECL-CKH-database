@@ -43,4 +43,5 @@ class DataDetailView(generic.DetailView):
         data = get_object_or_404(Data, pk=primary_key)
         
         return render(request, 'catalog/data_detail.html', context={'data': data})
+
     

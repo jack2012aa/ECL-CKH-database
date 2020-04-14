@@ -6,7 +6,7 @@
   <ul>
     {% for pig in pig_list %}
       <li>
-        <!-- <a href="{{ pig.get_absolute_url }}">{{ pig.title }}</a> ({{pig.pig_id}}) -->
+        <a href="{{ pig.get_absolute_url }}">{{ pig.pig_id }}</a>        
       </li>
     {% endfor %}
   </ul>
