@@ -6,8 +6,8 @@
   <ul>
     {% for data in data_list %}
       <li>
-        <!-- <a href="{{ data.get_absolute_url }}">{{ data.title }}</a> ({{data.pig_id}}) -->
-        <a href="{% url 'data-detail' data.pk %}">{{ data.title }}</a> ({{data.pig_id}})
+        <!-- <a href="{{ data.get_absolute_url }}">{{ data.title }}</a> ({{data.data_id}}) -->
+        <a href="{% url 'data-detail' data.pk %}">{{ data.title }}</a> ({{data.data_id}})
       </li>
     {% endfor %}
   </ul>

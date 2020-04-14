@@ -27,6 +27,9 @@ def index(request):
 from django.views import generic
 class DataListView(generic.ListView):
     model = Data
+    
+class PigListView(generic.ListView):
+    model = Pig
 
 class DataDetailView(generic.DetailView):
     model = Data
