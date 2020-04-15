@@ -44,4 +44,15 @@ class DataDetailView(generic.DetailView):
         
         return render(request, 'catalog/data_detail.html', context={'data': data})
 
-    
+class PigDetailView(generic.DetailView):
+    model = Pig
+    def pig_detail_view(request, primary_key):
+        try:
+            pig = pig.objects.get(pk=primary_key)
+        except Pig.DoesNotExist:
+            raise Http404('Pig does not exist')
+
+        from django.shortcuts import get_object_or_404
+        pig = get_object_or_404(Pig, pk=primary_key)
+        
+        return render(request, 'catalog/pig_detail.html', context={'pig': pig})
