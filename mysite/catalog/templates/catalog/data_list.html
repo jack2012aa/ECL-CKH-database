@@ -6,7 +6,6 @@
   <ul>
     {% for data in data_list %}
       <li>
-        <!-- <a href="{{ data.get_absolute_url }}">{{ data.title }}</a> ({{data.data_id}}) -->
         <p>no.
           <a href="{% url 'data-detail' data.pk %}">{{ data.data_id }}</a> (pig id: {{data.pig_id}})
         </p>

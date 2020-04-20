@@ -1,18 +1,51 @@
 {% extends "base_generic.html" %}
 
+
 {% block content %}
-  <h1>Pig List</h1>
-  {% if pig_list %}
-  <ul>
-    {% for pig in pig_list %}
-      <li>
-        <!-- <a href="{{ pig.get_absolute_url }}">{{ pig.title }}</a> ({{pig.pig_id}}) -->
-        <p>no.
-          <a href="{% url 'pig-detail' pig.pk %}">{{ pig.pig_id }}</a> (pig id: {{pig.pig_id}})     
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no data in the library.</p>
-  {% endif %}       
+	<h1>Pig List</h1>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1 m-b-110">
+					<div class="table100-head">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<th class="cell100 column1">Pig id</th>
+									<th class="cell100 column2">Birthday</th>
+									<th class="cell100 column3">Gender</th>
+									<th class="cell100 column4">Dad_id</th>
+									<th class="cell100 column5">Mom_id</th>
+									<th class="cell100 column6">Breed</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<div class="table100-body js-pscroll">
+						<table>
+							<tbody>
+							 {% if pig_list %}
+							 <ul>
+							  {% for pig in pig_list %}
+								<tr class="row100 body">
+									<td class="cell100 column1">{{ pig.pig_id }}</td>
+									<td class="cell100 column2">{{ pig.birth }}</td>
+									<td class="cell100 column3">{{ pig.gender }}</td>
+									<td class="cell100 column4">{{ pig.dad_id }}</td>
+									<td class="cell100 column5">{{ pig.mom_id }}</td>
+									<td class="cell100 column6">{{ pig.breed }}</td>
+								</tr>
+							  {% endfor %}
+							 </ul>
+							{% else %}
+							 <p>There are no data in the library.</p>
+							{% endif %} 	
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				
 {% endblock %}
+
