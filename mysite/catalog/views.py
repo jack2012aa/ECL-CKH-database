@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 # from django.http import HttpResponse
-from datetime import datetime
+import csv, io
 # Create your views here.
 
 from .models import Data, Pig
@@ -28,11 +29,34 @@ from django.views import generic
 class DataListView(generic.ListView):
     model = Data
     
-class PigListView(generic.ListView):
-    model = Pig
+def PigListView(request):
+    context = {
+        'pig_list': Pig.objects.all(),
+        }
+    if request.method == 'GET':
+        return render(request, 'pig_list.html', context=context)
+
+    csv_file = request.FILES['files']
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'THIS IS NOT A CSV FILE')
+    data_set = csv_file.read().decode('UTF_8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=',', quotechar='\\'):
+        created = Pig.objects.update_or_create(
+            pig_id=column[0],
+            birth=column[1],
+            gender=column[2],
+            dad_id=column[3],
+            mom_id=column[4],
+            breed=column[5],
+            )
+    io_string.close()
+    return render(request, 'pig_list.html', context=context)
 
 class DataDetailView(generic.DetailView):
     model = Data
+    ''' if writen in function view
     def book_detail_view(request, primary_key):
         try:
             data = Data.objects.get(pk=primary_key)
@@ -43,9 +67,11 @@ class DataDetailView(generic.DetailView):
         data = get_object_or_404(Data, pk=primary_key)
         
         return render(request, 'catalog/data_detail.html', context={'data': data})
+    '''
 
 class PigDetailView(generic.DetailView):
     model = Pig
+    ''' if writen in function view
     def pig_detail_view(request, primary_key):
         try:
             pig = pig.objects.get(pk=primary_key)
@@ -56,3 +82,4 @@ class PigDetailView(generic.DetailView):
         pig = get_object_or_404(Pig, pk=primary_key)
         
         return render(request, 'catalog/pig_detail.html', context={'pig': pig})
+        '''

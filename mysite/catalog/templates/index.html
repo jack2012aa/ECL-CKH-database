@@ -1,13 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Home</h1>
-  <p>Welcome to , a website developed by <em>Catherine</em>!</p>
-
-  <h2>Dynamic content</h2>
-  <p>The data set has the following record counts:</p>
-  <ul>
-    <li><strong>Pigs:</strong> {{ num_pigs }}</li>
-    <li><strong>Datas:</strong> {{ num_datas }}</li>
+  <h2 style="margin: 0px 32px 10px;">Home</h2>
+        <p style="margin: 0px 32px 10px;margin-bottom: 0px;">Welcome to a website developed by Catherine and Jack!&nbsp;</p>
+        <p style="margin-left: 32px;">Our data set has the following record counts:&nbsp;</p>
+        <ul style="margin-left: 32px;">
+            <li>Pigs:{{ num_pigs }}</li>
+            <li>Datas:{{ num_datas }}</li>
+        </ul>
   </ul>
 {% endblock %}
