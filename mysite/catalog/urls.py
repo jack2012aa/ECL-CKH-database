@@ -7,5 +7,6 @@ urlpatterns = [
     path('data/<int:pk>', views.DataDetailView.as_view(), name='data-detail'),
     path('pigs/', views.PigListView, name='pigs'),
     path('pig/<int:pk>', views.PigDetailView.as_view(), name='pig-detail'),
+    path('downloadpiglist', views.export_piglist, name='downloadpiglist')
 ]
 
