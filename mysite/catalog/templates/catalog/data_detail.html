@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Data No: {{ data.data_id }}</h1>
 
-  <p><strong>Pig:</strong> <a href="">{{ data.pig_id }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Pig:</strong><a href="{% url 'pig-detail' data.pig_id.pk %}">{{ data.pig_id }}</a></p>
   <p><strong>weight:</strong> {{ data.weight }}</p> 
   <p><strong>length:</strong> {{ data.length }}</p>
   <p><strong>height:</strong> {{ data.height }}</p> 
