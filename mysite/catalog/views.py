@@ -77,17 +77,18 @@ def export_piglist(request):
 class DataDetailView(generic.DetailView):
     model = Data
     ''' if writen in function view
-    def book_detail_view(request, primary_key):
+    def data_detail_view(request, primary_key):
         try:
             data = Data.objects.get(pk=primary_key)
         except Data.DoesNotExist:
-            raise Http404('Book does not exist')
+            raise Http404('Data does not exist')
 
         from django.shortcuts import get_object_or_404
         data = get_object_or_404(Data, pk=primary_key)
         
         return render(request, 'catalog/data_detail.html', context={'data': data})
-    '''
+        '''
+
 
 class PigDetailView(generic.DetailView):
     model = Pig
@@ -103,3 +104,4 @@ class PigDetailView(generic.DetailView):
         
         return render(request, 'catalog/pig_detail.html', context={'pig': pig})
         '''
+    

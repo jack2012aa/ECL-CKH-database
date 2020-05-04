@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse #Used to generate URLs by reversing the URL patterns
 
 # Create your models here.
 
@@ -24,7 +25,7 @@ class Pig(models.Model):
 
     # def get_absolute_url(self):
     #     """Returns the url to access a particular author instance."""
-    #     return reverse('pig-detail', args=[str(self.id)])
+    #     return reverse('pig-detail', args=[str(self.pig_id)])
 
     def __str__(self):
         """String for representing the Model object."""
@@ -37,7 +38,6 @@ class Pig(models.Model):
     
     display_genre.short_description = 'Genre'
 
-from django.urls import reverse #Used to generate URLs by reversing the URL patterns
 
 class Data(models.Model):
     """Model representing measuring datas."""
