@@ -1,18 +1,187 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Data List</h1>
-  {% if data_list %}
-  <ul>
-    {% for data in data_list %}
-      <li>
-        <p>no.
-          <a href="{% url 'data-detail' data.pk %}">{{ data.data_id }}</a> (pig id: {{data.pig_id}})
-        </p>
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>There are no data in the library.</p>
-  {% endif %}       
+  	<h1>Data List</h1>
+	<form action="" method="POST" enctype="multipart/form-data">
+		<div class="form-row">
+		{% csrf_token %}
+			<div>		
+				<label for="file1"> Upload a file(only accepts CSV files)</label>
+				<input type="file" id="file1" name="files">
+			</div>
+			<div>
+				<button type="submit">Upload</button>
+			</div>
+	</form>
+	<form method="GET" action=".">
+		<div class="form-group">
+			<label for="inputdata_id">Data ID</label>
+			<input type="search" class="form-control" id="inputdata_id" placeholder="Data ID" name="data_id">
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-2">
+				<label for="inputpig_id">豬豬ID</label>
+				<input type="number" class="form-control" id="inputpig_id" placeholder="1234-5" name="pig_id">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="intputpig_gender">豬豬性別</label>
+				<select id="intputpig_gender" class="form-control" name="pig_gender">
+					<option selected></option>
+					<option>Male</option>
+					<option>Female</option>
+				</select>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="intputpig_breed">豬豬品種</label>
+				<select id="intputpig_breed" class="form-control" name="pig_breed">
+					<option selected></option>
+					<option>Landrace</option>
+					<option>Yorkshire</option>
+					<option>Duroc</option>
+				</select>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmin">豬豬最早出生日</label>
+				<input type="date" class="form-control" id="inputpig_birthmin" name="pig_birth_min">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmax">豬豬最晚出生日</label>
+				<input type="date" class="form-control" id="inputpig_birthmax" name="pig_birth_max">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="inputweightmin">最低體重</label>
+				<input type="number" class="form-control" id="inputweightmin" placeholder="xx kg" name="data_weight_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputweightmax">最高體重</label>
+				<input type="number" class="form-control" id="inputweightmax" placeholder="xx kg" name="data_weight_max">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputlengthmin">最低體長</label>
+				<input type="number" class="form-control" id="inputlengthmin" placeholder="xx cm" name="data_length_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputlengthmax">最高體長</label>
+				<input type="number" class="form-control" id="inputlengthmax" placeholder="xx cm" name="data_length_max">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="inputheightmin">最低體高</label>
+				<input type="number" class="form-control" id="inputheightmin" placeholder="xx cm" name="data_height_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputheightmax">最高體高</label>
+				<input type="number" class="form-control" id="inputheightmax" placeholder="xx cm" name="data_height_max">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputfront_widthmin">最低前寬</label>
+				<input type="number" class="form-control" id="inputfront_widthmin" placeholder="xx cm" name="data_front_width_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputfront_widthmax">最高後寬</label>
+				<input type="number" class="form-control" id="inputfront_widthmax" placeholder="xx cm" name="data_front_width_max">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="inputback_widthmin">最低後寬</label>
+				<input type="number" class="form-control" id="inputback_widthmin" placeholder="xx cm" name="data_back_width_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputback_widthmax">最高後寬</label>
+				<input type="number" class="form-control" id="inputback_widthmax" placeholder="xx cm" name="data_back_width_max">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputdepthmin">最低體深</label>
+				<input type="number" class="form-control" id="inputdepthmin" placeholder="xx cm" name="data_depth_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputdepthmax">最高體深</label>
+				<input type="number" class="form-control" id="inputdepthmax" placeholder="xx cm" name="data_depth_max">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="inputchestmin">最低胸深</label>
+				<input type="number" class="form-control" id="inputchestmin" placeholder="xx cm" name="data_chest_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputchestmax">最高胸深</label>
+				<input type="number" class="form-control" id="inputchesttmax" placeholder="xx cm" name="data_chest_max">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputfront_cirmin">最低前管圍</label>
+				<input type="number" class="form-control" id="inputfront_cirmin" placeholder="xx cm" name="data_front_cir_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputfront_cirmax">最高前管圍</label>
+				<input type="number" class="form-control" id="inputfront_cirmax" placeholder="xx cm" name="data_front_cir_max">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="inputback_cirmin">最低後管圍</label>
+				<input type="number" class="form-control" id="inputback_cirmin" placeholder="xx cm" name="data_back_cir_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputback_cirmax">最高後管圍</label>
+				<input type="number" class="form-control" id="inputback_cirmax" placeholder="xx cm" name="data_back_cir_max">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputdatemin">起始拍攝日</label>
+				<input type="date" class="form-control" id="inputdatemin" name="data_date_min">
+			</div>
+			<div class="form-group col-md-3">
+				<label for="inputdatemax">最晚拍攝日</label>
+				<input type="date" class="form-control" id="inputdatemax" name="data_date_max">
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Search</button>
+		<table class="table">
+			<thead>
+				<tr class="row100 head">
+					<th class="cell100 column1">資料編號</th>
+					<th class="cell100 column2">Pig id</th>
+					<th class="cell100 column3">重量</th>
+					<th class="cell100 column4">體長</th>
+					<th class="cell100 column5">體高</th>
+					<th class="cell100 column6">前寬</th>
+					<th class="cell100 column7">後寬</th>
+					<th class="cell100 column8">體深</th>
+					<th class="cell100 column9">胸深</th>
+					<th class="cell100 column10">前管圍</th>
+					<th class="cell100 column11">後管圍</th>
+					<th class="cell100 column12">拍攝日期</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if data_list %}
+				{% for data in data_list %}
+				<tr>
+					<td><a href="{% url 'data-detail' data.pk %}">{{ data.data_id }}</a></td>
+					<td><a href="{% url 'pig-detail' data.pig_id.pk %}">{{ data.pig_id }}</a></td>
+					<td>{{ data.weight }}</td>
+					<td>{{ data.length }}</td>
+					<td>{{ data.height }}</td>
+					<td>{{ data.front_width }}</td>
+					<td>{{ data.back_width }}</td>
+					<td>{{ data.depth }}</td>
+					<td>{{ data.chest }}</td>
+					<td>{{ data.front_cannon_circumference }}</td>
+					<td>{{ data.back_cannon_circumference }}</td>
+					<td>{{ data.date }}</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<tr>
+					<td>There are no data in the library.</td>
+				</tr>
+				{% endif %} 	
+			</tbody>
+		</table>
+		<li><a href="{% url 'downloaddatalist' %}">Download</a></li>	
+	</form>	
 {% endblock %}

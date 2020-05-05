@@ -10,14 +10,8 @@ class Pig(models.Model):
     gender = models.CharField(max_length=100)
     dad_id = models.CharField(max_length=100)
     mom_id = models.CharField(max_length=100)
-    breeds = (
-        ('L', 'Landrace'),
-        ('Y', 'Yorkshire'),
-        ('D', 'Duroc'),
-    )
     breed = models.CharField(
-        max_length=4,
-        choices=breeds,
+        max_length=10,
         help_text='Pig\'s breed',
         blank=True,
         null=True,
@@ -35,22 +29,16 @@ class Pig(models.Model):
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""
         return ', '.join(genre.name for genre in self.genre.all()[:3])
-    
-    display_genre.short_description = 'Genre'
-
 
 class Data(models.Model):
     """Model representing measuring datas."""
+    data_id = models.AutoField(primary_key=True)
     pig_id = models.ForeignKey('Pig', on_delete=models.SET_NULL, null=True)
     
     # Foreign Key used because a data can only belong to one pig, but a pig can have multiple datas
     # Pig as a string rather than object because it hasn't been declared yet in the file.
     
-    data_id = models.CharField(
-        max_length=11,
-        help_text="Input date + pig_id",
-        null=True,
-        )
+
     weight = models.FloatField(help_text='Input weight in kg.')
     length = models.FloatField(help_text='Input body length in cm.')
     height = models.FloatField(help_text='Input height in cm.')
@@ -77,5 +65,5 @@ class Data(models.Model):
     
     def __str__(self):
         """String for representing the Model object."""
-        return self.data_id
+        return str(self.data_id)
     
