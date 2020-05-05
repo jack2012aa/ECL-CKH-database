@@ -10,49 +10,81 @@
 		<small>Only accepts CSV files</small>
 		<button type="submit">Upload</button>
 	</form>
-	<li><a href="{% url 'downloadpiglist' %}">Download</a></li>
-	<div class="limiter">
-		<div class="container-table100">
-			<div class="wrap-table100">
-				<div class="table100 ver1 m-b-110">
-					<div class="table100-head">
-						<table>
-							<thead>
-								<tr class="row100 head">
-									<th class="cell100 column1">Pig id</th>
-									<th class="cell100 column2">Birthday</th>
-									<th class="cell100 column3">Gender</th>
-									<th class="cell100 column4">Dad_id</th>
-									<th class="cell100 column5">Mom_id</th>
-									<th class="cell100 column6">Breed</th>
-								</tr>
-							</thead>
-						</table>
-					</div>
-
-					<div class="table100-body js-pscroll">
-						<table>
-							<tbody>
-							 {% if pig_list %}
-							 <ul>
-							  {% for pig in pig_list %}
-								<tr class="row100 body">
-									<td class="cell100 column1">{{ pig.pig_id }}</td>
-									<td class="cell100 column2">{{ pig.birth }}</td>
-									<td class="cell100 column3">{{ pig.gender }}</td>
-									<td class="cell100 column4">{{ pig.dad_id }}</td>
-									<td class="cell100 column5">{{ pig.mom_id }}</td>
-									<td class="cell100 column6">{{ pig.breed }}</td>
-								</tr>
-							  {% endfor %}
-							 </ul>
-							{% else %}
-							 <p>There are no data in the library.</p>
-							{% endif %} 	
-							</tbody>
-						</table>
-					</div>
-				</div>
+	<form method="GET" action="." >
+		<div class="form-row">
+			<div class="form-group col-md-2">
+				<label for="inputpig_id">Pig_ID</label>
+				<input type="number" class="form-control" id="inputpig_id" placeholder="0000" name="pig_id">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="intputpig_gender">Gender</label>
+				<select id="intputpig_gender" class="form-control" name="pig_gender">
+					<option selected></option>
+					<option>Male</option>
+					<option>Female</option>
+				</select>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="intputpig_breed">Breed</label>
+				<select id="intputpig_breed" class="form-control" name="pig_breed">
+					<option selected></option>
+					<option>Landrace</option>
+					<option>Yorkshire</option>
+					<option>Duroc</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmin">Pig_Dad_id</label>
+				<input type="number" class="form-control" id="inputpig_dad_id" placeholder="1111" name="pig_dad_id">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmax">Pig_Mom_id</label>
+				<input type="number" class="form-control" id="inputpig_mom__id" placeholder="2222" name="pig_mom_id">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmin">Pig Birthday from</label>
+				<input type="date" class="form-control" id="inputpig_birthmin" placeholder="YYYY-MM-DD" name="pig_birth_from" >
+			</div>
+			<div class="form-group col-md-2">
+				<label for="inputpig_birthmax">to</label>
+				<input type="date" class="form-control" id="inputpig_birthmax"  placeholder="YYYY-MM-DD" name="pig_birth_to">
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Search</button>
+		<table class="table">
+			<thead>
+				<tr class="row100 head">
+					<th class="cell100 column1">Pig id</th>
+					<th class="cell100 column2">Birthday</th>
+					<th class="cell100 column3">Gender</th>
+					<th class="cell100 column4">Dad_id</th>
+					<th class="cell100 column5">Mom_id</th>
+					<th class="cell100 column6">Breed</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if pig_list %}
+				{% for pig in pig_list %}
+				<tr>
+					<td>{{ pig.pig_id }}</td>
+					<td>{{ pig.birth }}</td>
+					<td>{{ pig.gender }}</td>
+					<td>{{ pig.dad_id }}</td>
+					<td>{{ pig.mom_id }}</td>
+					<td>{{ pig.breed }}</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<tr>
+					<td>There are no data in the library.</td>
+				</tr>
+				{% endif %} 	
+			</tbody>
+		</table>
+		<li><a href="{% url 'downloadpiglist' %}">Download</a></li>	
+	</form>	
 				
 				
 {% endblock %}
