@@ -62,18 +62,20 @@
 					<th class="cell100 column4">Dad_id</th>
 					<th class="cell100 column5">Mom_id</th>
 					<th class="cell100 column6">Breed</th>
+					<th class="cell100 column7">edit</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% if pig_list %}
 				{% for pig in pig_list %}
 				<tr>
-					<td>{{ pig.pig_id }}</td>
+					<td><a href="{% url 'pig-detail' pig.pk %}">{{ pig.pig_id }}</a></td>
 					<td>{{ pig.birth }}</td>
 					<td>{{ pig.gender }}</td>
 					<td>{{ pig.dad_id }}</td>
 					<td>{{ pig.mom_id }}</td>
 					<td>{{ pig.breed }}</td>
+					<td><a href="/edit-pig/?id={{ pig.pk }}">edit</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}

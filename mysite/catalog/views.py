@@ -246,7 +246,7 @@ def PigListView(request):
             breed=column[5],
             )
     io_string.close()
-    context = {'pig_list': DataListFilter(request)}
+    context = {'pig_list': PigListFilter(request)}
     return render(request, 'pig_list.html', context=context)
 
 def export_piglist(request):
@@ -299,7 +299,8 @@ class DataDetailView(generic.DetailView):
 
 class PigDetailView(generic.DetailView):
     model = Pig
-    ''' if writen in function view
+    
+    #  if writen in function view
     def pig_detail_view(request, primary_key):
         try:
             pig = pig.objects.get(pk=primary_key)
@@ -310,5 +311,7 @@ class PigDetailView(generic.DetailView):
         pig = get_object_or_404(Pig, pk=primary_key)
         
         return render(request, 'catalog/pig_detail.html', context={'pig': pig})
-        '''
     
+
+def edit_pig(request):
+    return render(request, 'edit_pig.html')
