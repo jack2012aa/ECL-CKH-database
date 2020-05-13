@@ -249,6 +249,7 @@ def PigListView(request):
     context = {'pig_list': PigListFilter(request)}
     return render(request, 'pig_list.html', context=context)
 
+
 def export_piglist(request):
     '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
     #Tell browsers it is a csv file
@@ -263,6 +264,7 @@ def export_piglist(request):
     for pig in qs:
         writer.writerow([pig.pig_id, pig.birth, pig.gender, pig.dad_id, pig.mom_id, pig.breed])
     return response
+
 
 def export_datalist(request):
     '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
@@ -280,6 +282,7 @@ def export_datalist(request):
                          data.back_width, data.depth, data.chest, data.front_cannon_circumference,
                          data.back_cannon_circumference, data.date])
     return response
+
 
 class DataDetailView(generic.DetailView):
     model = Data
@@ -313,5 +316,18 @@ class PigDetailView(generic.DetailView):
         return render(request, 'catalog/pig_detail.html', context={'pig': pig})
     
 
-def edit_pig(request):
-    return render(request, 'edit_pig.html')
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+class PigCreate(CreateView):
+    model = Pig
+    fields = '__all__'
+
+
+class PigUpdate(UpdateView):
+    model = Pig
+    fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
+
+
+class PigDelete(DeleteView):
+    model = Pig
+    success_url = reverse_lazy('pigs')

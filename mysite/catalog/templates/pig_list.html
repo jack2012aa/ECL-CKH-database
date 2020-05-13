@@ -63,6 +63,7 @@
 					<th class="cell100 column5">Mom_id</th>
 					<th class="cell100 column6">Breed</th>
 					<th class="cell100 column7">edit</th>
+					<th class="cell100 column8">delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -75,7 +76,8 @@
 					<td>{{ pig.dad_id }}</td>
 					<td>{{ pig.mom_id }}</td>
 					<td>{{ pig.breed }}</td>
-					<td><a href="/edit-pig/?id={{ pig.pk }}">edit</a></td>
+					<td><a href="{% url 'pig-update' pig.pk %}">edit</a></td>
+					<td><a href="{% url 'pig-delete' pig.pk %}">delete</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}
