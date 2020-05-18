@@ -17,9 +17,9 @@ class Pig(models.Model):
         null=True,
     )
 
-    # def get_absolute_url(self):
-    #     """Returns the url to access a particular author instance."""
-    #     return reverse('pig-detail', args=[str(self.pig_id)])
+    def get_absolute_url(self):
+        """Returns the url to access a particular author instance."""
+        return reverse('pig-detail', args=[str(self.pig_id)])
 
     def __str__(self):
         """String for representing the Model object."""

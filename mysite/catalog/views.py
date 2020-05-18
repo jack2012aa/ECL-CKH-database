@@ -143,6 +143,46 @@ def DataListFilter(request):
         
     return qs
 
+
+def PigListFilter(request):
+    #Generate filter from request
+    '''Refer to https://github.com/justdjango/djfilter'''
+    #global variable for export
+    global qs
+    qs = Pig.objects.all()
+    pig_id = request.GET.get('pig_id')
+    pig_gender = request.GET.get('pig_gender')
+    pig_breed = request.GET.get('pig_breed')
+    pig_dad_id = request.GET.get('pig_dad_id')
+    pig_mom_id = request.GET.get('pig_mom_id')
+    pig_birth_from = request.GET.get('pig_birth_from')
+    pig_birth_to = request.GET.get('pig_birth_to')
+    
+
+    if is_valid_queryparam(pig_id):
+        qs = qs.filter(pig_id=pig_id) 
+            
+    if is_valid_queryparam(pig_gender):
+        qs = qs.filter(gender=pig_gender)
+        
+    if is_valid_queryparam(pig_breed):
+        qs = qs.filter(breed=pig_breed)
+
+    if is_valid_queryparam(pig_dad_id):
+        qs = qs.filter(dad_id=pig_dad_id) 
+
+    if is_valid_queryparam(pig_mom_id):
+        qs = qs.filter(mom_id=pig_mom_id)
+
+    if is_valid_queryparam(pig_birth_from):
+        qs = qs.filter(birth__gte=pig_birth_from)
+
+    if is_valid_queryparam(pig_birth_to):
+        qs = qs.filter(birth__lt=pig_birth_to)
+        
+    return qs
+
+
 def DataListView(request):
     if request.method == 'GET':
         context = {'data_list': DataListFilter(request)}
@@ -177,11 +217,12 @@ def DataListView(request):
             io_string.close()
         context = {'data_list': DataListFilter(request)}
         return render(request, 'data_list.html', context=context)
-    
+
+
 def PigListView(request):
-    context = {'pig_list': Pig.objects.all()}
     #GET request
     if request.method == 'GET':
+        context = {'pig_list': PigListFilter(request)}
         return render(request, 'pig_list.html', context=context)
     
     #POST request
@@ -205,7 +246,9 @@ def PigListView(request):
             breed=column[5],
             )
     io_string.close()
+    context = {'pig_list': PigListFilter(request)}
     return render(request, 'pig_list.html', context=context)
+
 
 def export_piglist(request):
     '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
@@ -217,9 +260,11 @@ def export_piglist(request):
     #Create a csv file
     writer = csv.writer(response)
     writer.writerow(['Pig id', 'Birthday', 'Gender', 'Dad id', 'Mom id', 'Breed'])
-    for pig in Pig.objects.all():
+    # for pig in Pig.objects.all():
+    for pig in qs:
         writer.writerow([pig.pig_id, pig.birth, pig.gender, pig.dad_id, pig.mom_id, pig.breed])
     return response
+
 
 def export_datalist(request):
     '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
@@ -237,6 +282,7 @@ def export_datalist(request):
                          data.back_width, data.depth, data.chest, data.front_cannon_circumference,
                          data.back_cannon_circumference, data.date])
     return response
+
 
 class DataDetailView(generic.DetailView):
     model = Data
@@ -256,7 +302,8 @@ class DataDetailView(generic.DetailView):
 
 class PigDetailView(generic.DetailView):
     model = Pig
-    ''' if writen in function view
+    
+    #  if writen in function view
     def pig_detail_view(request, primary_key):
         try:
             pig = pig.objects.get(pk=primary_key)
@@ -267,5 +314,20 @@ class PigDetailView(generic.DetailView):
         pig = get_object_or_404(Pig, pk=primary_key)
         
         return render(request, 'catalog/pig_detail.html', context={'pig': pig})
-        '''
     
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+class PigCreate(CreateView):
+    model = Pig
+    fields = '__all__'
+
+
+class PigUpdate(UpdateView):
+    model = Pig
+    fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
+
+
+class PigDelete(DeleteView):
+    model = Pig
+    success_url = reverse_lazy('pigs')

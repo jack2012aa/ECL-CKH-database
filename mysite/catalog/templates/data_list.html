@@ -162,7 +162,7 @@
 				{% for data in data_list %}
 				<tr>
 					<td><a href="{% url 'data-detail' data.pk %}">{{ data.data_id }}</a></td>
-					<td><a href="{% url 'pig-detail' data.pig_id.pk %}">{{ data.pig_id }}</a></td>
+					<td>{{ data.pig_id }}</td>
 					<td>{{ data.weight }}</td>
 					<td>{{ data.length }}</td>
 					<td>{{ data.height }}</td>
