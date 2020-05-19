@@ -3,12 +3,22 @@ from django.contrib import messages
 
 from django.http import HttpResponse
 import csv, io
+import datetime
 # Create your views here.
 
-from .models import Data, Pig
+from .models import Data, Pig, Pig_history
 
 def is_valid_queryparam(param):
     return (param != '' and param is not None)
+
+def check_change(object_history_data, column, fields):
+    i = 0
+    for field in fields:
+        if getattr(object_history_data, field) != column[i]:
+            print(getattr(object_history_data, field), column[i])
+            return True
+        i += 1
+    return False
 
 def index(request):
     """View function for home page of site."""
@@ -196,12 +206,12 @@ def DataListView(request):
         #Check if it is a csv file
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'THIS IS NOT A CSV FILE')
-            data_set = csv_file.read().decode('UTF_8')
-            io_string = io.StringIO(data_set)
-            next(io_string)
-            #Upload to the database
-            for column in csv.reader(io_string, delimiter=',', quotechar='\\'):
-                created = Data.objects.update_or_create(
+        data_set = csv_file.read().decode('UTF_8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
+        #Upload to the database
+        for column in csv.reader(io_string, delimiter=',', quotechar='\\'):
+            created = Data.objects.update_or_create(
                 pig_id=Pig.objects.filter(pig_id=column[0])[0],
                 weight=column[1],
                 length=column[2],
@@ -214,7 +224,7 @@ def DataListView(request):
                 back_cannon_circumference=column[9],
                 date=column[10],
                 )
-            io_string.close()
+        io_string.close()
         context = {'data_list': DataListFilter(request)}
         return render(request, 'data_list.html', context=context)
 
@@ -236,14 +246,25 @@ def PigListView(request):
     io_string = io.StringIO(data_set)
     next(io_string)
     #Upload to the database
+    fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
     for column in csv.reader(io_string, delimiter=',', quotechar='\\'):
+        try:
+            object_history_data = Pig.objects.get(pig_id=column[0])
+            object_history = Pig_history()
+            if check_change(object_history_data, column, fields):
+                for field in fields:
+                    field_history = getattr(object_history_data, field)
+                    setattr(object_history, field, field_history)
+                object_history.modified_date = datetime.datetime.now()
+                object_history.save()
+        except:
+            pass
+                
         created = Pig.objects.update_or_create(
             pig_id=column[0],
-            birth=column[1],
-            gender=column[2],
-            dad_id=column[3],
-            mom_id=column[4],
-            breed=column[5],
+            defaults={'birth':column[1], 'gender':column[2], 'dad_id':column[3], 
+                      'mom_id':column[4], 'breed':column[5],
+                      }
             )
     io_string.close()
     context = {'pig_list': PigListFilter(request)}
@@ -323,8 +344,23 @@ class PigCreate(CreateView):
     fields = '__all__'
 
 
-class PigUpdate(UpdateView):
+class Update_with_historyView(UpdateView):
+    history_model = None
+    
+    def post(self, request, *args, **kwargs):
+        object_history_data = self.get_object()
+        object_history = self.history_model()
+        for field in self.fields:
+            field_history = getattr(object_history_data, field)
+            setattr(object_history, field, field_history)
+        object_history.modified_date = datetime.datetime.now()
+        object_history.save()
+        return super().post(request, *args, **kwargs)
+
+
+class PigUpdate(Update_with_historyView):
     model = Pig
+    history_model = Pig_history
     fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
 
 
