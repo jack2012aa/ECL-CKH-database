@@ -18,7 +18,7 @@
 			</div>
 			<div class="form-group col-md-2">
 				<label for="intputpig_gender">Gender</label>
-				<select id="intputpig_gender" class="form-control" name="pig_gender">
+				<select id="intputpig_gender" class="form-control" name="gender">
 					<option selected></option>
 					<option>Male</option>
 					<option>Female</option>
@@ -26,7 +26,7 @@
 			</div>
 			<div class="form-group col-md-2">
 				<label for="intputpig_breed">Breed</label>
-				<select id="intputpig_breed" class="form-control" name="pig_breed">
+				<select id="intputpig_breed" class="form-control" name="breed">
 					<option selected></option>
 					<option>Landrace</option>
 					<option>Yorkshire</option>
@@ -37,19 +37,19 @@
 		<div class="form-row">
 			<div class="form-group col-md-2">
 				<label for="inputpig_birthmin">Pig_Dad_id</label>
-				<input type="number" class="form-control" id="inputpig_dad_id" placeholder="1111" name="pig_dad_id">
+				<input type="number" class="form-control" id="inputpig_dad_id" placeholder="1111" name="dad_id">
 			</div>
 			<div class="form-group col-md-2">
 				<label for="inputpig_birthmax">Pig_Mom_id</label>
-				<input type="number" class="form-control" id="inputpig_mom__id" placeholder="2222" name="pig_mom_id">
+				<input type="number" class="form-control" id="inputpig_mom__id" placeholder="2222" name="mom_id">
 			</div>
 			<div class="form-group col-md-2">
 				<label for="inputpig_birthmin">Pig Birthday from</label>
-				<input type="date" class="form-control" id="inputpig_birthmin" placeholder="YYYY-MM-DD" name="pig_birth_from" >
+				<input type="date" class="form-control" id="inputpig_birthmin" placeholder="YYYY-MM-DD" name="birth_min" >
 			</div>
 			<div class="form-group col-md-2">
 				<label for="inputpig_birthmax">to</label>
-				<input type="date" class="form-control" id="inputpig_birthmax"  placeholder="YYYY-MM-DD" name="pig_birth_to">
+				<input type="date" class="form-control" id="inputpig_birthmax"  placeholder="YYYY-MM-DD" name="birth_max">
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary">Search</button>
@@ -67,8 +67,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% if pig_list %}
-				{% for pig in pig_list %}
+				{% if list %}
+				{% for pig in list %}
 				<tr>
 					<td><a href="{% url 'pig-detail' pig.pk %}">{{ pig.pig_id }}</a></td>
 					<td>{{ pig.birth }}</td>
