@@ -20,11 +20,11 @@
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-2">
-				<label for="inputpig_id">豬豬ID</label>
+				<label for="inputpig_id">豬隻ID</label>
 				<input type="number" class="form-control" id="inputpig_id" placeholder="1234-5" name="pig_id">
 			</div>
 			<div class="form-group col-md-2">
-				<label for="intputpig_gender">豬豬性別</label>
+				<label for="intputpig_gender">豬隻性別</label>
 				<select id="intputpig_gender" class="form-control" name="gender">
 					<option selected></option>
 					<option>Male</option>
@@ -32,7 +32,7 @@
 				</select>
 			</div>
 			<div class="form-group col-md-2">
-				<label for="intputpig_breed">豬豬品種</label>
+				<label for="intputpig_breed">豬隻品種</label>
 				<select id="intputpig_breed" class="form-control" name="breed">
 					<option selected></option>
 					<option>Landrace</option>
@@ -41,11 +41,11 @@
 				</select>
 			</div>
 			<div class="form-group col-md-2">
-				<label for="inputpig_birthmin">豬豬最早出生日</label>
+				<label for="inputpig_birthmin">豬隻最早出生日</label>
 				<input type="date" class="form-control" id="inputpig_birthmin" name="birth_min">
 			</div>
 			<div class="form-group col-md-2">
-				<label for="inputpig_birthmax">豬豬最晚出生日</label>
+				<label for="inputpig_birthmax">豬隻最晚出生日</label>
 				<input type="date" class="form-control" id="inputpig_birthmax" name="birth_max">
 			</div>
 		</div>
@@ -155,6 +155,7 @@
 					<th class="cell100 column10">前管圍</th>
 					<th class="cell100 column11">後管圍</th>
 					<th class="cell100 column12">拍攝日期</th>
+					<th class="cell100 column13">歷史紀錄</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -173,6 +174,7 @@
 					<td>{{ data.front_cannon_circumference }}</td>
 					<td>{{ data.back_cannon_circumference }}</td>
 					<td>{{ data.date }}</td>
+					<td><a href="{% url 'data-history' data.pk %}">history</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}

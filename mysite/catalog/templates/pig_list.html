@@ -56,16 +56,17 @@
 		<table class="table">
 			<thead>
 				<tr class="row100 head">
-					<th class="cell100 column1">Pig id</th>
-					<th class="cell100 column2">Birthday</th>
-					<th class="cell100 column3">Gender</th>
-					<th class="cell100 column4">Dad_id</th>
-					<th class="cell100 column5">Mom_id</th>
-					<th class="cell100 column6">Breed</th>
+					<th class="cell100 column1">豬隻ID</th>
+					<th class="cell100 column2">豬隻生日</th>
+					<th class="cell100 column3">豬隻性別</th>
+					<th class="cell100 column4">豬隻父畜</th>
+					<th class="cell100 column5">豬隻母畜</th>
+					<th class="cell100 column6">豬隻品種</th>
 					{% if user.is_authenticated %}
-						<th class="cell100 column7">edit</th>
-						<th class="cell100 column8">delete</th>
+						<th class="cell100 column7">編輯</th>
+						<th class="cell100 column8">刪除</th>
 					{% endif %}
+					<th class="cell100 column9">歷史資料</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -82,6 +83,7 @@
 						<td><a href="{% url 'pig-update' pig.pk %}">edit</a></td>
 						<td><a href="{% url 'pig-delete' pig.pk %}">delete</a></td>
 					{% endif %}
+					<td><a href="{% url 'pig-history' pig.pk %}">history</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}

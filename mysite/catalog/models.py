@@ -32,6 +32,7 @@ class Pig_history(models.Model):
     mom_id = models.CharField(null=True, max_length=100)
     breed = models.CharField(max_length=10, help_text='Pig\'s breed', blank=True, null=True)
     modified_date = models.DateTimeField(auto_now=True)
+    user = models.CharField(null = True, max_length=100)
     
     def __str__(self):
         """String for representing the Model object."""
@@ -81,6 +82,7 @@ class Data_history(models.Model):
     back_cannon_circumference = models.FloatField(null=True)
     date = models.DateField(null=True)   
     modified_date = models.DateTimeField(auto_now=True)
+    user = models.CharField(null = True, max_length=100)
 
     def __str__(self):
         """String for representing the Model object."""

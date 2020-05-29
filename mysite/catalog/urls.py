@@ -12,5 +12,7 @@ urlpatterns = [
     path('pig/create/', views.PigCreate.as_view(), name='pig-create'),
     path('pig/<int:pk>/update/', views.PigUpdate.as_view(), name='pig-update'),
     path('pig/<int:pk>/delete/', views.PigDelete.as_view(), name='pig-delete'),
+    path('pig/<int:pk>/history/', views.Pig_HistoryDetailView, name='pig-history'),
+    path('data/<int:pk>/history/', views.Data_HistoryDetailView, name='data-history'),
 ]
 

@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Pig No: {{ pig_history.pig_id }}</h1>
+<table class="table">
+	<thead>
+		<tr class="row100 head">
+			<th class="cell100 column1">Pig id</th>
+			<th class="cell100 column2">Birthday</th>
+			<th class="cell100 column3">Gender</th>
+			<th class="cell100 column4">Dad_id</th>
+			<th class="cell100 column5">Mom_id</th>
+			<th class="cell100 column6">Breed</th>
+			<th class="cell100 column7">Modified date</th>
+			<th class="cell100 column8">User</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if pig_history %}
+		{% for pig_history in pig_history %}
+		<tr>
+			<td>{{ pig_history.pig_id }}</a></td>
+			<td>{{ pig_history.birth }}</td>
+			<td>{{ pig_history.gender }}</td>
+			<td>{{ pig_history.dad_id }}</td>
+			<td>{{ pig_history.mom_id }}</td>
+			<td>{{ pig_history.breed }}</td>
+			<td>{{ pig_history.modified_date }}</td>
+			<td>{{ pig_history.user }}</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<tr>
+			<td>There are no data in the library.</td>
+		</tr>
+		{% endif %} 	
+	</tbody>
+</table>
+{% endblock %}

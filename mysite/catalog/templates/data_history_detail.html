@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Data No: {{ data_history.data_id }}</h1>
+<table class="table">
+	<thead>
+		<tr class="row100 head">
+			<th class="cell100 column1">資料編號</th>
+			<th class="cell100 column2">Pig id</th>
+			<th class="cell100 column3">重量</th>
+			<th class="cell100 column4">體長</th>
+			<th class="cell100 column5">體高</th>
+			<th class="cell100 column6">前寬</th>
+			<th class="cell100 column7">後寬</th>
+			<th class="cell100 column8">體深</th>
+			<th class="cell100 column9">胸深</th>
+			<th class="cell100 column10">前管圍</th>
+			<th class="cell100 column11">後管圍</th>
+			<th class="cell100 column12">拍攝日期</th>
+			<th class="cell100 column13">修改日期</th>
+			<th class="cell100 column14">修改用戶</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if list %}
+		{% for data in data_history %}
+		<tr>
+			<td>{{ data.data_id }}</a></td>
+			<td>{{ data.pig_id }}</td>
+			<td>{{ data.weight }}</td>
+			<td>{{ data.length }}</td>
+			<td>{{ data.height }}</td>
+			<td>{{ data.front_width }}</td>
+			<td>{{ data.back_width }}</td>
+			<td>{{ data.depth }}</td>
+			<td>{{ data.chest }}</td>
+			<td>{{ data.front_cannon_circumference }}</td>
+			<td>{{ data.back_cannon_circumference }}</td>
+			<td>{{ data.date }}</td>
+			<td>{{ data.modified_date }}</td>
+			<td>{{ data.user }}</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<tr>
+			<td>There are no data in the library.</td>
+		</tr>
+		{% endif %} 	
+	</tbody>
+</table>
+{% endblock %}

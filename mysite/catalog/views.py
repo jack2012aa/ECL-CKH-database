@@ -74,14 +74,15 @@ def upload_csv(request, model, fields, model_history):
                 for field in fields:
                     field_history = getattr(object_history_data, field)
                     setattr(object_history, field, field_history)
-                    object_history.save()
+                setattr(object_history, 'user', request.user)
+                object_history.save()
         except:
             pass
         
         defaults = {}
         for i in range(len(column) - 1):
             defaults[fields[i + 1]] = column[i + 1]
-        created = model.objects.update_or_create({fields[0]:column[0]}, defaults=defaults) 
+        created = model.objects.update_or_create(**{fields[0]:column[0]}, defaults=defaults) 
     io_string.close()
         
 def index(request):
@@ -116,6 +117,27 @@ def PigListView(request):
         qs = listfilter(request,model,fields)
         context = {'list':qs}
         return render(request,template,context)
+
+def export_piglist(request):
+    '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
+    #Tell browsers it is a csv file
+    response = HttpResponse(content_type='text/csv')
+    #File's name
+    response['Content-Disposition'] = 'attachment; filename = "pig_list.csv"'
+    
+    #Create a csv file
+    writer = csv.writer(response)
+    writer.writerow(['Pig id', 'Birthday', 'Gender', 'Dad id', 'Mom id', 'Breed'])
+    # for pig in Pig.objects.all():
+    for pig in qs:
+        writer.writerow([pig.pig_id, pig.birth, pig.gender, pig.dad_id, pig.mom_id, pig.breed])
+    return response
+
+def Pig_HistoryDetailView(request, pk):
+    pig_id = pk
+    pig_history = Pig_history.objects.filter(pig_id=pig_id)
+    context = {'pig_history':pig_history}
+    return render(request,'pig_history_detail.html',context)
     
 def DataListView(request):
     model = Data
@@ -137,22 +159,6 @@ def DataListView(request):
         context = {'list':qs}
         return render(request,template,context)
 
-def export_piglist(request):
-    '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
-    #Tell browsers it is a csv file
-    response = HttpResponse(content_type='text/csv')
-    #File's name
-    response['Content-Disposition'] = 'attachment; filename = "pig_list.csv"'
-    
-    #Create a csv file
-    writer = csv.writer(response)
-    writer.writerow(['Pig id', 'Birthday', 'Gender', 'Dad id', 'Mom id', 'Breed'])
-    # for pig in Pig.objects.all():
-    for pig in qs:
-        writer.writerow([pig.pig_id, pig.birth, pig.gender, pig.dad_id, pig.mom_id, pig.breed])
-    return response
-
-
 def export_datalist(request):
     '''Refer to https://docs.djangoproject.com/en/3.0/howto/outputting-csv/'''
     #Tell browsers it is a csv file
@@ -169,6 +175,12 @@ def export_datalist(request):
                          data.back_width, data.depth, data.chest, data.front_cannon_circumference,
                          data.back_cannon_circumference, data.date])
     return response
+
+def Data_HistoryDetailView(request, pk):
+    data_id = pk
+    data_history = Data_history.objects.filter(data_id=data_id)
+    context = {'data_history':data_history}
+    return render(request,'data_history_detail.html',context)
 
 
 class DataDetailView(generic.DetailView):
@@ -193,6 +205,7 @@ class Update_with_historyView(UpdateView):
         for field in self.fields:
             field_history = getattr(object_history_data, field)
             setattr(object_history, field, field_history)
+        setattr(object_history, 'user', request.user)
         object_history.save()
         return super().post(request, *args, **kwargs)
 
