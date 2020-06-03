@@ -57,7 +57,7 @@ def foreignfilter(request, foreignkey, foreignkeyfields, qs):
                     qs = qs.filter(**{field_range:param})
     return qs
     
-def upload_csv(request, model, fields, model_history):
+def upload_csv(request, model, fields, model_history, foreignkey=None, foreignkey_model=None):
     csv_file = request.FILES['files']
     #Check if it is a csv file
     if not csv_file.name.endswith('.csv'):
@@ -81,8 +81,14 @@ def upload_csv(request, model, fields, model_history):
         
         defaults = {}
         for i in range(len(column) - 1):
-            defaults[fields[i + 1]] = column[i + 1]
+            if fields[i + 1] == foreignkey:
+                print('==========', column[i+1], '=========')
+                defaults[fields[i + 1]] = foreignkey_model.objects.get(pk = column[i +1])
+            else:
+                defaults[fields[i + 1]] = column[i + 1]
         created = model.objects.update_or_create(**{fields[0]:column[0]}, defaults=defaults) 
+        
+
     io_string.close()
         
 def index(request):
@@ -147,13 +153,14 @@ def DataListView(request):
     template = 'data_list.html'
     foreignkey = 'pig_id'
     foreignkeyfields = ['pig_id', 'gender', 'breed', 'birth']
+    foreignkey_model = Pig
     if request.method == 'GET':
         qs = listfilter(request,model,fields)
         qs = foreignfilter(request, foreignkey, foreignkeyfields, qs)
         context = {'list':qs}
         return render(request,template,context)
     elif request.method == 'POST':
-        upload_csv(request, model, fields, model_history)
+        upload_csv(request, model, fields, model_history, foreignkey=foreignkey, foreignkey_model=foreignkey_model)
         qs = listfilter(request,model,fields)
         qs = foreignfilter(request, foreignkey, foreignkeyfields, qs)
         context = {'list':qs}
