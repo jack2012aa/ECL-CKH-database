@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+	<h1>Pig Video</h1>
+	{% csrf_token %}
+	<button onclick="location.href='{% url 'video-create' %}';">Upload Video</button>
+	</form>
+	<form method="GET" action="." >
+		<div class="form-row">
+            <input type="text" class="form-control" id="inputvideo_id" placeholder="0000" name="video_id">
+            <button type="submit" class="btn btn-primary">Search</button>
+		</div>
+		<table class="table">
+			<thead>
+				<tr class="row100 head">
+					<th class="cell100 column1">影片ID</th>
+					<th class="cell100 column2">拍攝者</th>
+					<th class="cell100 column3">拍攝日期</th>
+					<th class="cell100 column4">豬隻</th>
+					<th class="cell100 column5">攝影機</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if list %}
+				{% for video in list %}
+				<tr>
+					<td><a href="{% url 'video-detail' video.pk %}">{{ video.video_id }}</a></td>
+					<td>{{ video.photographer }}</td>
+					<td>{{ video.date}}</td>
+					<td>{{ video.pig_id }}</td>
+					<td>{{ video.camera}}</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<tr>
+					<td>There are no data in the library.</td>
+				</tr>
+				{% endif %} 	
+			</tbody>
+		</table>
+	</form>	
+				
+				
+{% endblock %}

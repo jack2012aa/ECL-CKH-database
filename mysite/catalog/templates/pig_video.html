@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<video width="960" height="540" controls>
+    <source src= "{{video_data.video.url}}" type="video/mp4">
+Your browser does not support the video tag.
+  </video> 
+  <h3>{{video_data.video_id}}</h3>
+  <div> 
+    <p>拍攝者: {{video_data.photographer}}</p>
+    <p>攝影機: {{video_data.camera}}             日期: {{video_data.date}}             豬隻: {{video_data.pig_id}}</p>
+    <a href="{% url 'downloadpigvideo' video_data.pk %}">Download</a>
+</div>
+<div>
+
+</div>
+{% endblock %}

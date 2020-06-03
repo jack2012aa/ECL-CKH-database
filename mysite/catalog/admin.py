@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pig, Data, Pig_history, Data_history
+from .models import Pig, Data, Pig_history, Data_history,Pig_Video
 # Register your models here.
 
 # Define the admin class
@@ -24,3 +24,7 @@ class Pig_historyAdmin(admin.ModelAdmin):
 class Data_historyAdmin(admin.ModelAdmin):
     list_display = ('data_id', 'pig_id', 'weight', 'length', 'height', 'front_width', 'back_width', 'depth', 
               'chest', 'front_cannon_circumference', 'back_cannon_circumference', 'date', 'modified_date', 'user')
+
+@admin.register(Pig_Video)
+class Pig_VideoAdmin(admin.ModelAdmin):
+    list_display = ('video_id', 'video', 'photographer', 'date', 'pig_id', 'camera')

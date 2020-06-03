@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.decorators import classonlymethod
 from django.views import generic
+from django.http import StreamingHttpResponse
 import csv, io
 import datetime
-from .models import Data, Pig, Pig_history, Data_history
+from .models import Data, Pig, Pig_history, Data_history, Pig_Video
 # Create your views here.
 
 
@@ -35,7 +36,6 @@ def listfilter(request, model, fields):
                 param_range = str(field) + str(param_up_down[i])
                 field_range = str(field) + str(field_up_down[i])
                 param = request.GET.get(param_range)
-                print('====', field_range, param, param_range, '====')
                 if is_valid_queryparam(param):
                     qs = qs.filter(**{field_range:param})
     return qs
@@ -219,3 +219,35 @@ class PigUpdate(Update_with_historyView):
 class PigDelete(DeleteView):
     model = Pig
     success_url = reverse_lazy('pigs')
+
+def PigVideoListVIew(request):
+    template = 'pig_video_list.html'
+    qs = Pig_Video.objects.all()
+    video_id = request.GET.get('video_id')
+    
+    if is_valid_queryparam(video_id):
+        qs = Pig_Video.objects.filter(video_id=video_id)
+    
+    context = {'list':qs}
+    return render(request, template, context)
+
+def PigVideoView(request, pk):
+    template = 'pig_video.html'
+    video_id = pk
+    qs = Pig_Video.objects.get(pk=video_id)
+    context = {'video_data':qs}
+    return render(request, template, context)
+
+def export_pigvideo(request, pk):
+    if request.method == 'POST':
+        return redirect('video/create/')
+    video = Pig_Video.objects.get(pk = pk)
+    video_file = open('/home/ntuast/ECL-CKH-database/mysite/catalog/video/' + str(video.video), 'rb')
+    response = HttpResponse(video_file)
+    response['Content-Type'] = 'video/mp4'
+    response['Content-Disposition'] = 'attachment; filename = "%s"' % (video.video_id + '.mp4')
+    return response
+
+class PigVideoCreate(CreateView):
+    model = Pig_Video
+    fields = '__all__'
