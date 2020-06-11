@@ -155,7 +155,10 @@
 					<th class="cell100 column10">前管圍</th>
 					<th class="cell100 column11">後管圍</th>
 					<th class="cell100 column12">拍攝日期</th>
-					<th class="cell100 column13">歷史紀錄</th>
+					{% if user.is_authenticated %}
+						<th class="cell100 column13">編輯</th>
+					{% endif %}
+					<th class="cell100 column14">歷史紀錄</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -174,6 +177,9 @@
 					<td>{{ data.front_cannon_circumference }}</td>
 					<td>{{ data.back_cannon_circumference }}</td>
 					<td>{{ data.date }}</td>
+					{% if user.is_authenticated %}
+						<td><a href="{% url 'data-update' data.pk %}">edit</a></td>
+					{% endif %}
 					<td><a href="{% url 'data-history' data.pk %}">history</a></td>
 				</tr>
 				{% endfor %}

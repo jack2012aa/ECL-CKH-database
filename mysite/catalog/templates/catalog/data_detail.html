@@ -12,5 +12,8 @@
   <p><strong>depth:</strong> {{ data.depth }}</p> 
   <p><strong>chest:</strong> {{ data.chest }}</p> 
   <p><strong>date:</strong> {{ data.date }}</p> 
+  {% if user.is_authenticated %}
+    <p><a href="{% url 'data-update' data.pk %}">edit</a></p>
+  {% endif %}
   
 {% endblock %}

@@ -6,6 +6,8 @@ from django.views import generic
 from django.http import StreamingHttpResponse
 import csv, io
 import datetime
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Data, Pig, Pig_history, Data_history, Pig_Video
 # Create your views here.
 
@@ -196,9 +198,6 @@ class DataDetailView(generic.DetailView):
 class PigDetailView(generic.DetailView):
     model = Pig
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-
 class PigCreate(CreateView):
     model = Pig
     fields = '__all__'
@@ -216,12 +215,19 @@ class Update_with_historyView(UpdateView):
         object_history.save()
         return super().post(request, *args, **kwargs)
 
-
 class PigUpdate(Update_with_historyView):
     model = Pig
     history_model = Pig_history
     fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
 
+class DataUpdate(Update_with_historyView):
+    model = Data
+    history_model = Data_history
+    fields = [
+        'weight', 'length', 'height', 'front_width', 
+        'back_width', 'depth', 'chest', 'front_cannon_circumference',
+        'back_cannon_circumference', 'date'
+    ]
 
 class PigDelete(DeleteView):
     model = Pig

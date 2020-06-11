@@ -54,6 +54,10 @@ class Data(models.Model):
     back_cannon_circumference = models.FloatField(help_text='Input front cannon circumference in cm.' )
     date = models.DateField(help_text='Input measuring date.')   
 
+    def get_absolute_url(self):
+        """Returns the url to access a particular author instance."""
+        return reverse('data-detail', args=[str(self.data_id)])
+
     def __str__(self):
         """String for representing the Model object."""
         return str(self.data_id)
