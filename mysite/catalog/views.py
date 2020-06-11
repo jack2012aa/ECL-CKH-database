@@ -233,6 +233,10 @@ class PigDelete(DeleteView):
     model = Pig
     success_url = reverse_lazy('pigs')
 
+class DataDelete(DeleteView):
+    model = Data
+    success_url = reverse_lazy('datas')
+
 def PigVideoListVIew(request):
     template = 'pig_video_list.html'
     qs = Pig_Video.objects.all()

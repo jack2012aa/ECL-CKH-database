@@ -16,6 +16,7 @@ urlpatterns = [
     path('pig/<str:pk>/delete/', views.PigDelete.as_view(), name='pig-delete'),
     path('pig/<str:pk>/history/', views.Pig_HistoryDetailView, name='pig-history'),
     path('data/<str:pk>/update/', views.DataUpdate.as_view(), name='data-update'),
+    path('data/<str:pk>/delete/', views.DataDelete.as_view(), name='data-delete'),
     path('data/<str:pk>/history/', views.Data_HistoryDetailView, name='data-history'),
     path('videos/', views.PigVideoListVIew, name='videos'),
     path('videos/<str:pk>/video', views.PigVideoView, name='video-detail'),

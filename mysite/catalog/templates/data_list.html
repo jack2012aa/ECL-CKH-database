@@ -157,8 +157,9 @@
 					<th class="cell100 column12">拍攝日期</th>
 					{% if user.is_authenticated %}
 						<th class="cell100 column13">編輯</th>
+						<th class="cell100 column14">刪除</th>
 					{% endif %}
-					<th class="cell100 column14">歷史紀錄</th>
+					<th class="cell100 column15">歷史紀錄</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -179,6 +180,7 @@
 					<td>{{ data.date }}</td>
 					{% if user.is_authenticated %}
 						<td><a href="{% url 'data-update' data.pk %}">edit</a></td>
+						<td><a href="{% url 'data-delete' data.pk %}">delete</a></td>
 					{% endif %}
 					<td><a href="{% url 'data-history' data.pk %}">history</a></td>
 				</tr>
