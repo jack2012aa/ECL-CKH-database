@@ -224,7 +224,7 @@ class DataUpdate(Update_with_historyView):
     model = Data
     history_model = Data_history
     fields = [
-        'data_id', 'pig_id', 'weight', 'length', 'height', 'front_width', 
+        'weight', 'length', 'height', 'front_width', 
         'back_width', 'depth', 'chest', 'front_cannon_circumference',
         'back_cannon_circumference', 'date'
     ]
