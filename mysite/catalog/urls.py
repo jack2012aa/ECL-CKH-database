@@ -18,9 +18,12 @@ urlpatterns = [
     path('data/<str:pk>/update/', views.DataUpdate.as_view(), name='data-update'),
     path('data/<str:pk>/delete/', views.DataDelete.as_view(), name='data-delete'),
     path('data/<str:pk>/history/', views.Data_HistoryDetailView, name='data-history'),
-    path('videos/', views.PigVideoListVIew, name='videos'),
+    path('videos/', views.PigVideoListView, name='videos'),
     path('videos/<str:pk>/video', views.PigVideoView, name='video-detail'),
     path('downloadpigvideo/<str:pk>', views.export_pigvideo, name='downloadpigvideo'),
+    path('downloadvideoframe/<str:pk>', views.export_videoframe, name='downloadvideoframe'),
     path('video/create/', views.PigVideoCreate.as_view(), name='video-create'),
+    path('depthvideos', views.PigDepthVideoListView, name='depth_videos'),
+    path('depthvideo/create/', views.PigDepthVideoCreate.as_view(), name='depth_video-create')
 ] 
 

@@ -8,7 +8,7 @@ import csv, io
 import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Data, Pig, Pig_history, Data_history, Pig_Video
+from .models import Data, Pig, Pig_history, Data_history, Pig_Video, Pig_Depth_Video
 # Create your views here.
 
 
@@ -93,6 +93,14 @@ def upload_csv(request, model, fields, model_history, foreignkey=None, foreignke
 
     io_string.close()
         
+def file_iterator(fn, chunk_size=512):
+    while True:
+        c = fn.read(chunk_size)
+        if c:
+            yield c
+        else:
+            break
+
 def index(request):
     """View function for home page of site."""
 
@@ -237,7 +245,7 @@ class DataDelete(DeleteView):
     model = Data
     success_url = reverse_lazy('datas')
 
-def PigVideoListVIew(request):
+def PigVideoListView(request):
     template = 'pig_video_list.html'
     qs = Pig_Video.objects.all()
     video_id = request.GET.get('video_id')
@@ -259,12 +267,37 @@ def export_pigvideo(request, pk):
     if request.method == 'POST':
         return redirect('video/create/')
     video = Pig_Video.objects.get(pk = pk)
-    video_file = open('/home/ntuast/ECL-CKH-database/mysite/catalog/video/' + str(video.video), 'rb')
+    video_file = open('/home/ntuast/ECL-CKH-database/local_data/' + str(video.video), 'rb')
     response = HttpResponse(video_file)
     response['Content-Type'] = 'video/mp4'
     response['Content-Disposition'] = 'attachment; filename = "%s"' % (video.video_id + '.mp4')
     return response
 
+def export_videoframe(request, pk):
+    if request.method == 'POST':
+        return redirect('video/create/')
+    video = Pig_Video.objects.get(pk = pk)
+    frame_file = open('/home/ntuast/ECL-CKH-database/local_data/' + str(video.video_frame), 'rb')
+    response = StreamingHttpResponse(file_iterator(frame_file))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename = "%s"' % (video.video_id + '.zip')
+    return response
+
 class PigVideoCreate(CreateView):
     model = Pig_Video
+    fields = '__all__'
+
+def PigDepthVideoListView(request):
+    template = 'pig_depth_video_list.html'
+    qs = Pig_Depth_Video.objects.all()
+    video_id = request.GET.get('video_id')
+    
+    if is_valid_queryparam(video_id):
+        qs = Pig_Video.objects.filter(video_id=video_id)
+    
+    context = {'list':qs}
+    return render(request, template, context)
+
+class PigDepthVideoCreate(CreateView):
+    model = Pig_Depth_Video
     fields = '__all__'

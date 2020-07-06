@@ -25,7 +25,7 @@ SECRET_KEY = '4$45#n+n(1##u(qmyx7t(ghx(-s-2)m^*h^1-sro*1fpxk75pr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','140.112.84.182']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','140.112.84.150']
 
 
 # Application definition
@@ -124,5 +124,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/'
 
-MEDIA_ROOT = '/home/ntuast/ECL-CKH-database/mysite/catalog/video/'
-MEDIA_URL = '/home/ntuast/ECL-CKH-database/mysite/catalog/video/'
+MEDIA_ROOT = '/home/ntuast/ECL-CKH-database/local_data/'
+MEDIA_URL = '/home/ntuast/ECL-CKH-database/local_data/'

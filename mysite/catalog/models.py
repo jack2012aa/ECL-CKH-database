@@ -86,6 +86,22 @@ class Data_history(models.Model):
 class Pig_Video(models.Model):
     video_id = models.CharField(max_length=100, primary_key=True)
     video=models.FileField(upload_to='pig_video')
+    video_frame=models.FileField(upload_to='video_frame', null = True)
+    photographer = models.CharField(max_length=20,null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+    pig_id=models.ForeignKey('Pig', on_delete=models.SET_NULL, null=True, blank=True)
+    camera=models.CharField(max_length=40,null=True, blank=True)
+
+    def __str__(self):
+        return str(self.video_id)
+   
+    def get_absolute_url(self):
+        """Returns the url to access a particular author instance."""
+        return reverse('video-detail', args=[str(self.video_id)])
+
+class Pig_Depth_Video(models.Model):
+    video_id = models.CharField(max_length=100, primary_key=True)
+    video=models.FileField(upload_to='pig_deep_video')
     photographer = models.CharField(max_length=20,null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     pig_id=models.ForeignKey('Pig', on_delete=models.SET_NULL, null=True, blank=True)

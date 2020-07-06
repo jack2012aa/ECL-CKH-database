@@ -9,7 +9,8 @@ Your browser does not support the video tag.
   <div> 
     <p>拍攝者: {{video_data.photographer}}</p>
     <p>攝影機: {{video_data.camera}}             日期: {{video_data.date}}             豬隻: {{video_data.pig_id}}</p>
-    <a href="{% url 'downloadpigvideo' video_data.pk %}">Download</a>
+    <a href="{% url 'downloadpigvideo' video_data.pk %}">Download影片.mp4</a>
+    <a href="{% url 'downloadvideoframe' video_data.pk %}">Download偵.zip</a>
 </div>
 <div>
 
