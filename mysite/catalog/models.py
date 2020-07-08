@@ -4,12 +4,18 @@ from django.urls import reverse #Used to generate URLs by reversing the URL patt
 # Create your models here.
 
 class Pig(models.Model):
-    pig_id = models.CharField(max_length=8,primary_key=True, help_text='Input birth year(XX) + ear tag')
+    pig_id = models.CharField(max_length=7,primary_key=True, help_text='Input birth year(XX) + ear tag')
     birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=100,null=True, blank=True)
     dad_id = models.CharField(max_length=100,null=True, blank=True)
     mom_id = models.CharField(max_length=100,null=True, blank=True)
-    breed = models.CharField(max_length=10, help_text='Pig\'s breed')
+    breed_choice = [
+        ('L', 'Landrace'),
+        ('Y', 'Yorkshire'),
+        ('D', 'Duroc'),
+    ]
+    breed = models.CharField(max_length=10, choices = breed_choice, help_text='Pig\'s breed')
+    registration_number = models.CharField(max_length=6, null = True, blank=True)
 
     def get_absolute_url(self):
         """Returns the url to access a particular author instance."""
@@ -25,12 +31,13 @@ class Pig(models.Model):
         return ', '.join(genre.name for genre in self.genre.all()[:3])
 
 class Pig_history(models.Model):
-    pig_id = models.CharField(null = True, max_length=8, help_text='Input birth year(XX) + ear tag')
+    pig_id = models.CharField(null = True, max_length=7, help_text='Input birth year(XX) + ear tag')
     birth = models.DateField(null=True, blank=True)
     gender = models.CharField(null=True, max_length=100, blank=True)
     dad_id = models.CharField(null=True, max_length=100, blank=True)
     mom_id = models.CharField(null=True, max_length=100, blank=True)
     breed = models.CharField(max_length=10, help_text='Pig\'s breed', blank=True, null=True)
+    registration_number = models.CharField(max_length=6, null = True, blank=True)
     modified_date = models.DateTimeField(auto_now=True)
     user = models.CharField(null = True, max_length=100)
     
@@ -41,7 +48,7 @@ class Pig_history(models.Model):
 
 class Data(models.Model):
     """Model representing measuring datas."""
-    data_id = models.CharField(primary_key=True, max_length=30)
+    data_id = models.CharField(primary_key=True, max_length=17)
     pig_id = models.ForeignKey('Pig', on_delete=models.SET_NULL, null=True)
     weight = models.FloatField(help_text='Input weight in kg.')
     length = models.FloatField(help_text='Input body length in cm.')
@@ -64,7 +71,7 @@ class Data(models.Model):
     
 class Data_history(models.Model):
     """Model representing measuring datas."""
-    data_id = models.CharField(null=True, max_length=30)
+    data_id = models.CharField(null=True, max_length=17)
     pig_id = models.ForeignKey('Pig', on_delete=models.SET_NULL, null=True)
     weight = models.FloatField(null=True)
     length = models.FloatField(null=True)
@@ -84,7 +91,7 @@ class Data_history(models.Model):
         return str(self.data_id)
 
 class Pig_Video(models.Model):
-    video_id = models.CharField(max_length=100, primary_key=True)
+    video_id = models.CharField(max_length=17, primary_key=True)
     video=models.FileField(upload_to='pig_video')
     video_frame=models.FileField(upload_to='video_frame', null = True)
     photographer = models.CharField(max_length=20,null=True, blank=True)
@@ -100,7 +107,7 @@ class Pig_Video(models.Model):
         return reverse('video-detail', args=[str(self.video_id)])
 
 class Pig_Depth_Video(models.Model):
-    video_id = models.CharField(max_length=100, primary_key=True)
+    video_id = models.CharField(max_length=17, primary_key=True)
     video=models.FileField(upload_to='pig_deep_video')
     photographer = models.CharField(max_length=20,null=True, blank=True)
     date = models.DateField(null=True, blank=True)
