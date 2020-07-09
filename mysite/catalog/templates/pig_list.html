@@ -62,6 +62,7 @@
 					<th class="cell100 column4">豬隻父畜</th>
 					<th class="cell100 column5">豬隻母畜</th>
 					<th class="cell100 column6">豬隻品種</th>
+					<th class="cell100 column6">註冊編號</th>
 					{% if user.is_authenticated %}
 						<th class="cell100 column7">編輯</th>
 						<th class="cell100 column8">刪除</th>
@@ -79,6 +80,7 @@
 					<td>{{ pig.dad_id }}</td>
 					<td>{{ pig.mom_id }}</td>
 					<td>{{ pig.breed }}</td>
+					<td>{{ pig.registration_number}}</td>
 					{% if user.is_authenticated %}
 						<td><a href="{% url 'pig-update' pig.pk %}">edit</a></td>
 						<td><a href="{% url 'pig-delete' pig.pk %}">delete</a></td>

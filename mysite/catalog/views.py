@@ -121,7 +121,7 @@ def index(request):
 
 def PigListView(request):
     model = Pig
-    fields = ['pig_id', 'birth', 'gender', 'dad_id', 'mom_id', 'breed']
+    fields = ['pig_id', 'birth', 'gender', 'dad_id', 'mom_id', 'breed', 'registration_number']
     model_history = Pig_history
     template = 'pig_list.html'
     if request.method == 'GET':
@@ -226,13 +226,13 @@ class Update_with_historyView(UpdateView):
 class PigUpdate(Update_with_historyView):
     model = Pig
     history_model = Pig_history
-    fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed']
+    fields = ['pig_id','birth','gender','dad_id', 'mom_id', 'breed', 'registration_number']
 
 class DataUpdate(Update_with_historyView):
     model = Data
     history_model = Data_history
     fields = [
-        'weight', 'length', 'height', 'front_width', 
+        'data_id','pig_id','weight', 'length', 'height', 'front_width', 
         'back_width', 'depth', 'chest', 'front_cannon_circumference',
         'back_cannon_circumference', 'date'
     ]
