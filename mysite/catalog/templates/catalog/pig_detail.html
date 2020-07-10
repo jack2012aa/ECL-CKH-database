@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Pig No: {{ pig.pig_id }}</h1>
+
+  <p><strong>Pig:</strong> {{ pig.pig_id }}</p>
+  <p><strong>birthday:</strong> {{ pig.birth }}</p> 
+  <p><strong>gender:</strong> {{ pig.gender }}</p>
+  <p><strong>dad_id:</strong> {{ pig.dad_id }}</p> 
+  <p><strong>mom_id:</strong> {{ pig.mom_id }}</p> 
+  <p><strong>breed:</strong> {{ pig.breed }}</p>
+  <p><strong>registration_number:</strong> {{ pig.registration_number }}</p>
+  {% if user.is_authenticated %}
+    <p><a href="{% url 'pig-update' pig.pk %}">edit</a></p>
+    <p><a href="{% url 'pig-delete' pig.pk %}">delete</a></p>
+  {% endif %}
+    
+
+{% endblock %}
