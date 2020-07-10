@@ -203,8 +203,14 @@ def Data_HistoryDetailView(request, pk):
 class DataDetailView(generic.DetailView):
     model = Data
 
-class PigDetailView(generic.DetailView):
-    model = Pig
+def PigDetailView(request, pk):
+    pig_id = pk
+    pig = Pig.objects.get(pk=pig_id)
+    datas = Data.objects.filter(pig_id__pig_id=pig_id)
+    videos = Pig_Video.objects.filter(pig_id__pig_id=pig_id)
+    depth_videos = Pig_Depth_Video.objects.filter(pig_id__pig_id=pig_id)
+    context = {'pig':pig, 'datas':datas, 'videos':videos, 'depth_videos':depth_videos}
+    return render(request, 'pig_detail.html', context)
 
 class PigCreate(CreateView):
     model = Pig

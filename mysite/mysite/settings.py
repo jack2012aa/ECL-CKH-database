@@ -124,5 +124,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/'
 
-MEDIA_ROOT = '/home/ntuast/ECL-CKH-database/local_data/'
-MEDIA_URL = '/home/ntuast/ECL-CKH-database/local_data/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'local_data/')
+MEDIA_URL = os.path.join(BASE_DIR, 'local_data/')

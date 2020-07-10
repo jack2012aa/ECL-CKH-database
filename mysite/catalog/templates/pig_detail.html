@@ -1,0 +1,120 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Pig No: {{ pig.pig_id }}</h1>
+
+  <h3>基本資料</h3>
+  <p><strong>Pig:</strong> {{ pig.pig_id }}</p>
+  <p><strong>birthday:</strong> {{ pig.birth }}</p> 
+  <p><strong>gender:</strong> {{ pig.gender }}</p>
+  <p><strong>dad_id:</strong> {{ pig.dad_id }}</p> 
+  <p><strong>mom_id:</strong> {{ pig.mom_id }}</p> 
+  <p><strong>breed:</strong> {{ pig.breed }}</p>
+
+<h3>測量資料</h3>
+<table class="table">
+  <thead>
+    <tr class="row100 head">
+      <th class="cell100 column1">資料編號</th>
+      <th class="cell100 column2">重量</th>
+      <th class="cell100 column3">體長</th>
+      <th class="cell100 column4">體高</th>
+      <th class="cell100 column5">前寬</th>
+      <th class="cell100 column6">後寬</th>
+      <th class="cell100 column7">體深</th>
+      <th class="cell100 column8">胸深</th>
+      <th class="cell100 column9">前管圍</th>
+      <th class="cell100 column10">後管圍</th>
+      <th class="cell100 column11">拍攝日期</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if datas %}
+    {% for data in datas %}
+    <tr>
+      <td><a href="{% url 'data-detail' data.pk %}">{{ data.data_id }}</a></td>
+      <td>{{ data.weight }}</td>
+      <td>{{ data.length }}</td>
+      <td>{{ data.height }}</td>
+      <td>{{ data.front_width }}</td>
+      <td>{{ data.back_width }}</td>
+      <td>{{ data.depth }}</td>
+      <td>{{ data.chest }}</td>
+      <td>{{ data.front_cannon_circumference }}</td>
+      <td>{{ data.back_cannon_circumference }}</td>
+      <td>{{ data.date }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td>There are no data in the library.</td>
+    </tr>
+    {% endif %} 	
+  </tbody>
+</table>
+
+<h3>RGB影片</h3>
+<table class="table">
+  <thead>
+    <tr class="row100 head">
+      <th class="cell100 column1">影片ID</th>
+      <th class="cell100 column2">拍攝者</th>
+      <th class="cell100 column3">拍攝日期</th>
+      <th class="cell100 column4">攝影機</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if videos %}
+    {% for video in videos %}
+    <tr>
+      <td><a href="{% url 'video-detail' video.pk %}">{{ video.video_id }}</a></td>
+      <td>{{ video.photographer }}</td>
+      <td>{{ video.date}}</td>
+      <td>{{ video.camera}}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+      <td>There are no data in the library.</td>
+    </tr>
+    {% endif %} 	
+  </tbody>
+</table>
+    
+<h3>深度影像</h3>
+    <table class="table">
+			<thead>
+				<tr class="row100 head">
+					<th class="cell100 column1">影片ID</th>
+					<th class="cell100 column2">拍攝者</th>
+					<th class="cell100 column3">拍攝日期</th>
+					<th class="cell100 column4">豬隻</th>
+					<th class="cell100 column5">攝影機</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if depth_videos %}
+				{% for video in depth_videos %}
+				<tr>
+					<td>{{ video.video_id }}</a></td>
+					<td>{{ video.photographer }}</td>
+					<td>{{ video.date}}</td>
+					<td>{{ video.pig_id }}</td>
+					<td>{{ video.camera}}</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<tr>
+					<td>There are no data in the library.</td>
+				</tr>
+				{% endif %} 	
+			</tbody>
+		</table>
+
+  {% if user.is_authenticated %}
+    <p><a href="{% url 'pig-update' pig.pk %}">edit</a></p>
+    <p><a href="{% url 'pig-delete' pig.pk %}">delete</a></p>
+  {% endif %}
+    
+
+{% endblock %}
