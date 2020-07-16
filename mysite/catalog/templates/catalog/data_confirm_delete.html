@@ -4,11 +4,12 @@
 
 <h1>Delete Data</h1>
 
-<p>Are you sure you want to delete the data: {{ data }}?</p>
+<h3>Are you sure you want to delete the data: {{ data }}?</h3>
 
 <form action="" method="POST">
   {% csrf_token %}
-  <input type="submit" action="" value="Yes, delete." />
+  <input class="btn btn-success" type="submit" action="" value="Yes, delete." />
+  <a class="btn btn-warning" href="{% url 'datas' %}"> Cancel</a>
 </form>
 
 {% endblock %}

@@ -140,7 +140,7 @@
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary">Search</button>
-		<table class="table">
+		<table class="table table-bordered table-striped">
 			<thead>
 				<tr class="row100 head">
 					<th class="cell100 column1">資料編號</th>
@@ -179,10 +179,10 @@
 					<td>{{ data.back_cannon_circumference }}</td>
 					<td>{{ data.date }}</td>
 					{% if user.is_authenticated %}
-						<td><a href="{% url 'data-update' data.pk %}">edit</a></td>
-						<td><a href="{% url 'data-delete' data.pk %}">delete</a></td>
+						<td><a href="{% url 'data-update' data.pk %}" class="btn btn-info">edit</a></td>
+						<td><a href="{% url 'data-delete' data.pk %}" class="btn btn-danger">delete</a></td>
 					{% endif %}
-					<td><a href="{% url 'data-history' data.pk %}">history</a></td>
+					<td><a href="{% url 'data-history' data.pk %}" class="btn btn-success">history</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}
@@ -192,6 +192,6 @@
 				{% endif %} 	
 			</tbody>
 		</table>
-		<li><a href="{% url 'downloaddatalist' %}">Download</a></li>	
+		<a href="{% url 'downloaddatalist' %}" class="btn btn-info">Download</a>	
 	</form>	
 {% endblock %}

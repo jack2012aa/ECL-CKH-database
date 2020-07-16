@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary">Search</button>
-		<table class="table">
+		<table class="table table-bordered table-striped">
 			<thead>
 				<tr class="row100 head">
 					<th class="cell100 column1">豬隻ID</th>
@@ -82,10 +82,10 @@
 					<td>{{ pig.breed }}</td>
 					<td>{{ pig.registration_number}}</td>
 					{% if user.is_authenticated %}
-						<td><a href="{% url 'pig-update' pig.pk %}">edit</a></td>
-						<td><a href="{% url 'pig-delete' pig.pk %}">delete</a></td>
+						<td><a href="{% url 'pig-update' pig.pk %}" class="btn btn-info">edit</a></td>
+						<td><a href="{% url 'pig-delete' pig.pk %}" class="btn btn-danger">delete</a></td>
 					{% endif %}
-					<td><a href="{% url 'pig-history' pig.pk %}">history</a></td>
+					<td><a href="{% url 'pig-history' pig.pk %}" class="btn btn-success">history</a></td>
 				</tr>
 				{% endfor %}
 				{% else %}
@@ -95,7 +95,7 @@
 				{% endif %} 	
 			</tbody>
 		</table>
-		<li><a href="{% url 'downloadpiglist' %}">Download</a></li>	
+		<a href="{% url 'downloadpiglist' %}" class="btn btn-info">Download</a>
 	</form>	
 				
 				
